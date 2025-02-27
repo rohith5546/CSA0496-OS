@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX_RECORDS 10
+#define RECORD_SIZE 50
+typedef struct 
+{
+    char data[RECORD_SIZE];
+} Record;
+void displayRecords(Record records[],int count) 
+{
+    printf("Records in the file:\n");
+    for (int i=0;i<count;i++) 
+	{
+        printf("Record %d: %s\n",i+1,records[i].data);
+    }
+}
+int main() 
+{
+    Record records[MAX_RECORDS];
+    int recordCount=0;
+    char input[RECORD_SIZE];
+    printf("Sequential File Allocation Simulation\n");
+    printf("You can enter up to %d records.\n",MAX_RECORDS);
+    while (recordCount < MAX_RECORDS) 
+	{
+        printf("Enter record %d (or type 'exit' to finish): ",recordCount+1);
+        fgets(input, RECORD_SIZE, stdin);
+        input[strcspn(input, "\n")]=0; 
+        if (strcmp(input, "exit")==0) 
+		{
+            break; 
+        }
+        strcpy(records[recordCount].data,input);
+        recordCount++;
+    }
+    displayRecords(records,recordCount);
+    printf("\nAccessing records sequentially:\n");
+    for (int i=0;i<recordCount;i++) 
+	{
+        printf("Accessing Record %d: %s\n",i+1,records[i].data);
+    }
+    return 0;
+}
